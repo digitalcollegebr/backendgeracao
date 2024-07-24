@@ -14,6 +14,5 @@ const UserTypesModel = connection.define(
     }
 );
 
-connection.sync({force: true});
 
 module.exports = UserTypesModel;
