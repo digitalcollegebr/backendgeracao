@@ -1,4 +1,4 @@
-const { Sequelize, QueryTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
 
 const connection = new Sequelize({
     dialect: 'mysql',
@@ -9,6 +9,7 @@ const connection = new Sequelize({
     port: 3306
 });
 
+module.exports = connection;
 
 
 
