@@ -3,13 +3,14 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const UsuariosRotas = require('./UsuariosRotas');
 const PostsRotas = require('./PostsRotas');
+const TagsRotas = require("./TagsRotas");
 
 const RotasPrivadas = express.Router();
 
 // Middleware
 RotasPrivadas.use((request, response, next) => {
-
-    let auth = false
+    return next();
+    let auth = false;
 
     if(request.headers.token) {
         const { token } = request.headers;
@@ -30,5 +31,6 @@ RotasPrivadas.use((request, response, next) => {
 
 RotasPrivadas.use(UsuariosRotas);
 RotasPrivadas.use(PostsRotas);
+RotasPrivadas.use(TagsRotas);
 
 module.exports = RotasPrivadas;

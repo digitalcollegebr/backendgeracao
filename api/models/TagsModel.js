@@ -13,7 +13,7 @@ Tags.init(
   {
     timestamps: false,
     sequelize: connection,
-  },
+  }
 );
 
 module.exports = Tags;
