@@ -4,6 +4,7 @@ require('dotenv').config()
 const UsuariosRotas = require('./UsuariosRotas');
 const PostsRotas = require('./PostsRotas');
 const TagsRotas = require("./TagsRotas");
+const UserTypesRotas = require("./UserTypesRotas");
 
 const RotasPrivadas = express.Router();
 
@@ -32,5 +33,6 @@ RotasPrivadas.use((request, response, next) => {
 RotasPrivadas.use(UsuariosRotas);
 RotasPrivadas.use(PostsRotas);
 RotasPrivadas.use(TagsRotas);
+RotasPrivadas.use(UserTypesRotas);
 
 module.exports = RotasPrivadas;
