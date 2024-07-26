@@ -1,42 +1,35 @@
-class PostModel {
-    static lista = [
-        {
-            id: 1,
-            titulo: "HTML e CSS",
-            conteudo: "",
-            user_id: 1
-        },
-        {
-            id: 2,
-            titulo: "JS a Melhor Linguagem",
-            conteudo: "",
-            user_id: 2
+const { DataTypes, Model } = require('sequelize');
+const connection = require('../config/connection');
+const UserModel = require("./UserModel");
+
+class PostModel extends Model {}
+
+PostModel.init({
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: UserModel,
+            key: 'id'
         }
-    ];
-
-    static listar() {
-        return PostModel.lista;
+    },
+    title: {
+        type: DataTypes.STRING(45),
+        allowNull: false
+    },
+    slug: {
+        type: DataTypes.STRING(255),
+        allowNull: false
+    },
+    content: {
+        type: DataTypes.TEXT
+    },
+    image_path: {
+        type: DataTypes.STRING(255)
     }
-
-    static consultarPorId(id) {
-        const dados = PostModel.lista.filter(item => item.id == id);
-        return dados;
-    }
-
-    static criar(data) {
-        PostModel.lista.push(data)
-    }
-
-    static atualizar(id, data) {
-        const indice = PostModel.lista.findIndex(item => item.id == id);
-        PostModel.lista[indice] = data;
-    }
-
-    static deletar(id) {
-        const dados = PostModel.lista.filter(item => item.id != id);
-        PostModel.lista = dados;
-    }
-
-}
+},{
+    sequelize: connection,
+    tableName: "posts"
+})
 
 module.exports = PostModel;

@@ -5,6 +5,7 @@ class UserController {
 
     async listar(request, response) {
         UserModel.hasOne(ProfileModel, {foreignKey: "user_id"});
+        
         const users = await UserModel.findAll({
             include: ProfileModel
         });
