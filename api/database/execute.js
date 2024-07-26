@@ -4,17 +4,17 @@ const ProfileModel = require('../models/ProfileModel');
 async function execute() {
 
     let user = await UserModel.create({
-        is_active: 1,
-        email: "jhon@mail.com",
-        username: "jhon",
-        password: 123
+        is_active: 0,
+        email: "mex@mail.com",
+        username: "mex",
+        password: 456
     });
 
     let profile = await ProfileModel.create({
         user_id: user.id,
-        firstname: "Jhon",
-        surname: "Smith"
-    })
+        firstname: "Mex",
+        surname: "Til"
+    });
 
     console.log(profile);
 
