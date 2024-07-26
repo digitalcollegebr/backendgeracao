@@ -5,13 +5,10 @@ class UserController {
 
     async listar(request, response) {
         UserModel.hasOne(ProfileModel, {foreignKey: "user_id"});
-        
         const users = await UserModel.findAll({
             include: ProfileModel
         });
-        
         return response.json(users);
-        
         
         // let dados = users.map(async user => {
         //     let profile = await ProfileModel.findOne({
@@ -26,13 +23,12 @@ class UserController {
         // dados = await Promise.all(dados);
 
         // console.log(dados)
-
-        
     }
 
     criar(request, response) {
+        UserModel.hasOne(ProfileModel, {foreignKey: "user_id"});
         const body = request.body;
-        UserModel.create(body);
+        UserModel.create(body, {include: ProfileModel});
         return response.status(201).json({
             message: "Usuário cadastrado com sucesso"
         });
