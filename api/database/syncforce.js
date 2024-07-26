@@ -5,5 +5,6 @@ require('../models/TagsModel');
 require('../models/UserModel');
 require('../models/ProfileModel');
 require('../models/PostModel');
+require('../models/PostTagModel');
 
 connection.sync({force: true});

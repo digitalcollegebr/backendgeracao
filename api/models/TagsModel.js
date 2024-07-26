@@ -10,7 +10,7 @@ Tags.init(
         allowNull: false
     }
   },
-  {
+  { 
     timestamps: false,
     sequelize: connection,
   }

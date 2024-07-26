@@ -1,6 +1,8 @@
 const PostModel = require('../models/PostModel');
 const UserModel = require('../models/UserModel');
 const ProfileModel = require('../models/ProfileModel');
+const PostTagModel = require('../models/PostTagModel');
+const TagModel = require('../models/TagsModel');
 
 class PostsController {
 
@@ -17,9 +19,25 @@ class PostsController {
         return response.json(dados);
     }
     
-    criar(request, response) {
-        const body = request.body;
-        PostModel.create(body);
+    async criar(request, response) {
+        
+        PostModel.belongsToMany(TagModel, {
+            through: PostTagModel,
+            foreignKey: 'post_id',
+            otherKey: 'tag_id'
+        });
+
+        const {tags, ...body} = request.body;
+
+        let post = await PostModel.create(body, {
+            include: {
+                through: PostTagModel,
+                model: TagModel
+            }
+        });
+
+        post.setTags(tags);
+
         return response.status(201).json({
             message: "Post cadastrado com sucesso"
         })
