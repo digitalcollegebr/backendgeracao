@@ -8,13 +8,24 @@ class PostsController {
 
     async listar(request, response) {
         PostModel.belongsTo(UserModel, {foreignKey: "user_id"});
+        PostModel.belongsToMany(TagModel, {
+            through: PostTagModel,
+            foreignKey: 'post_id',
+            otherKey: 'tag_id'
+        });
+
         UserModel.hasOne(ProfileModel, {foreignKey: 'user_id'});
         
         const dados = await PostModel.findAll({
-            include: {
-                model: UserModel,
-                include: ProfileModel
-            }
+            include: [
+                {
+                    model: UserModel,
+                    include: ProfileModel
+                },
+                {
+                    model: TagModel
+                }
+            ]
         });
         return response.json(dados);
     }
