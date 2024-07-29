@@ -5,6 +5,7 @@ const UserRotas = require('./UserRotas');
 const PostsRotas = require('./PostsRotas');
 const TagsRotas = require("./TagsRotas");
 const UserTypesRotas = require("./UserTypesRotas");
+const CommentsRotas = require("./CommentsRotas");
 
 const RotasPrivadas = express.Router();
 
@@ -34,5 +35,6 @@ RotasPrivadas.use(UserRotas);
 RotasPrivadas.use(PostsRotas);
 RotasPrivadas.use(TagsRotas);
 RotasPrivadas.use(UserTypesRotas);
+RotasPrivadas.use(CommentsRotas);
 
 module.exports = RotasPrivadas;

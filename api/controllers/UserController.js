@@ -29,6 +29,7 @@ class UserController {
     criar(request, response) {
         UserModel.hasOne(ProfileModel, {foreignKey: "user_id"});
         const body = request.body;
+        console.log(body);
         UserModel.create(body, {include: ProfileModel});
         return response.status(201).json({
             message: "Usuário cadastrado com sucesso"
