@@ -23,20 +23,11 @@ class CommentsController {
     }
     
     async criar(request, response) {
-<<<<<<< Updated upstream
-        let body = request.body;
-        CommentsModel.create(body);
-
-        return response.status(201).json({
-            message: "Post cadastrado com sucesso"
-        });
-=======
         const body = request.body
         CommentsModel.create(body);
         return response.status(201).json({
             message: "Comentário cadastrado com sucesso"
         })
->>>>>>> Stashed changes
     }
 }
 
