@@ -1,42 +1,58 @@
 const { DataTypes, Model } = require('sequelize');
 const connection = require('../config/connection');
-const UserModel = require("./UserModel");
-const PostModel = require("./PostModel");
+const PostModel = require('./PostModel');
+const UserModel = require('./UserModel');
 
-class CommentsModel extends Model {}
+class CommentsModel extends Model {
+  static associate () {
+    CommentsModel.hasOne(CommentsModel, {
+        foreignKey: "parent_id",
+        as: 'children'
+    });
+    
+    CommentsModel.belongsTo(CommentsModel, {
+        foreignKey: "parent_id",
+        as: "parents"
+    });
+  }
+}
 
-CommentsModel.init({
+CommentsModel.init(
+  {
     user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: UserModel,
-            key: 'id'
-        }
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: UserModel,
+        key: 'id'
+      }
     },
     post_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: PostModel,
-            key: 'id'
+          model: PostModel,
+          key: 'id'
         }
     },
     parent_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: CommentsModel,
-            key: 'id'
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+          model: CommentsModel,
+          key: 'id'
         }
     },
     content: {
-        type: DataTypes.TEXT,
-        allowNull: false
-    },
-},{
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
+  },
+  {
+    timestamps: true,
+    tableName: 'comments',
     sequelize: connection,
-    tableName: "comments"
-})
+  }
+);
 
 module.exports = CommentsModel;

@@ -3,9 +3,11 @@ const ProfileModel = require('../models/ProfileModel');
 
 class UserController {
 
+    constructor () {
+        UserModel.associate({ProfileModel});
+    }
+    
     async listar(request, response) {
-        UserModel.hasOne(ProfileModel, {foreignKey: "user_id"});
-        
         const users = await UserModel.findAll({
             include: ProfileModel
         });
@@ -27,7 +29,6 @@ class UserController {
     }
 
     criar(request, response) {
-        UserModel.hasOne(ProfileModel, {foreignKey: "user_id"});
         const body = request.body;
         console.log(body);
         UserModel.create(body, {include: ProfileModel});

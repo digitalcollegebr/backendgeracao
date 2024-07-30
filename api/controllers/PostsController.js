@@ -6,15 +6,17 @@ const TagModel = require('../models/TagsModel');
 
 class PostsController {
 
-    async listar(request, response) {
-        PostModel.belongsTo(UserModel, {foreignKey: "user_id"});
-        PostModel.belongsToMany(TagModel, {
-            through: PostTagModel,
-            foreignKey: 'post_id',
-            otherKey: 'tag_id'
+    constructor() {
+        UserModel.associate({ProfileModel})
+        PostModel.associate({
+            TagModel,
+            PostTagModel,
+            UserModel
         });
+    }
 
-        UserModel.hasOne(ProfileModel, {foreignKey: 'user_id'});
+    async listar(request, response) {
+        
         
         const dados = await PostModel.findAll({
             include: [
@@ -31,12 +33,6 @@ class PostsController {
     }
     
     async criar(request, response) {
-        
-        PostModel.belongsToMany(TagModel, {
-            through: PostTagModel,
-            foreignKey: 'post_id',
-            otherKey: 'tag_id'
-        });
 
         const {tags, ...body} = request.body;
 
