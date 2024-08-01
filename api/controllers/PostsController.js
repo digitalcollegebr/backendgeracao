@@ -16,8 +16,6 @@ class PostsController {
     }
 
     async listar(request, response) {
-        
-        
         const dados = await PostModel.findAll({
             include: [
                 {
@@ -32,6 +30,22 @@ class PostsController {
         return response.json(dados);
     }
     
+    async consultarPorId(request, response) {
+        let id = request.params.id;
+        let post = await PostModel.findByPk(id, {
+            attributes: ['title', 'slug', 'content'],
+            include: {
+                model: UserModel,
+                attributes: ["email", "is_active", "username"],
+                include: {
+                    model: ProfileModel,
+                    attributes: ['firstname', 'surname']
+                }
+            }
+        });
+        return response.json(post);
+    }
+
     async criar(request, response) {
 
         const {tags, ...body} = request.body;
@@ -47,6 +61,23 @@ class PostsController {
 
         return response.status(201).json({
             message: "Post cadastrado com sucesso"
+        })
+    }
+
+    async atualizar(request, response) {
+        const id = request.params.id;
+        const body = request.body;
+        await PostModel.update(body, { where: {id} });
+        return response.json({
+            message: "Post atualizado com sucesso!"
+        })        
+    }
+
+    async deletar(request, response) {
+        const id = request.params.id;
+        await PostModel.destroy({ where: {id} });
+        return response.json({
+            message: "Post deletado com sucesso!"
         })
     }
 }

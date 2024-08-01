@@ -1,9 +1,11 @@
 const { DataTypes, Model } = require('sequelize');
 const connection = require('../config/connection');
 const UserModel = require("./UserModel");
+const CommentsModel = require("./CommentsModel");
 
 class PostModel extends Model {
     static associate({PostTagModel, UserModel, TagModel}) {
+        PostModel.hasMany(CommentsModel, {foreignKey: "post_id", onDelete: "CASCADE"})
         PostModel.belongsTo(UserModel, {foreignKey: "user_id"});
         PostModel.belongsToMany(TagModel, {
             through: PostTagModel,

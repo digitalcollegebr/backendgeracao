@@ -8,4 +8,4 @@ require('../models/PostModel');
 require('../models/PostTagModel');
 require('../models/CommentsModel');
 
-connection.sync({force:true});
+connection.sync({alter:true});
