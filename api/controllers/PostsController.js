@@ -16,16 +16,10 @@ class PostsController {
     }
 
     async listar(request, response) {
+        let query = request.query;
+        query = query.fields.split(',');
         const dados = await PostModel.findAll({
-            include: [
-                {
-                    model: UserModel,
-                    include: ProfileModel
-                },
-                {
-                    model: TagModel
-                }
-            ]
+            attributes: query
         });
         return response.json(dados);
     }
@@ -57,7 +51,7 @@ class PostsController {
             }
         });
 
-        post.setTags(tags);
+        // post.setTags(tags);
 
         return response.status(201).json({
             message: "Post cadastrado com sucesso"

@@ -4,8 +4,8 @@ require('../models/UserTypesModel');
 require('../models/TagsModel');
 require('../models/UserModel');
 require('../models/ProfileModel');
+require('../models/CommentsModel');
 require('../models/PostModel');
 require('../models/PostTagModel');
-require('../models/CommentsModel');
 
-connection.sync({alter:true});
+connection.sync({force: true});
