@@ -3,6 +3,7 @@ const cors = require('cors')
 const RotasPrivadas = require('./rotas/RotasPrivadas');
 const RotasPublicas = require('./rotas/RotasPublicas');
 
+
 const host = "localhost"
 const port = 3000;
 

@@ -11,23 +11,13 @@ const RotasPrivadas = express.Router();
 
 // Middleware
 RotasPrivadas.use((request, response, next) => {
-    return next();
-    let auth = false;
-
-    if(request.headers.token) {
-        const { token } = request.headers;
-        try {
-            jwt.verify(token, process.env.APP_KEY_TOKEN);
-            auth = true;
-        } catch(e) {
-            return response.status(403).send(e);
-        }
-    } 
-
-    if(auth === false) {
-        return response.status(403).send("Não Autorizado");
+    // VERIFICA SE TEM AUTORIZACAO OU NAO
+    const token = request.headers.token;
+    try {
+        jwt.verify(token, process.env.APP_KEY_TOKEN)
+    }catch(JsonWebTokenError) {
+        return response.status(403).send("Não autorizado")
     }
-
     next();
 });
 
