@@ -12,6 +12,7 @@ const RotasPrivadas = express.Router();
 // Middleware
 RotasPrivadas.use((request, response, next) => {
     // VERIFICA SE TEM AUTORIZACAO OU NAO
+    
     const token = request.headers.token;
     try {
         jwt.verify(token, process.env.APP_KEY_TOKEN)
